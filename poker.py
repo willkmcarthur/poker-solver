@@ -82,6 +82,10 @@ class Player:
         for i in range(len(self.hand)):
             print ("{} of {}".format(self.hand[i].rank, self.hand[i].suit))
 
+# Should add a Player Hand Constructor that takes a position and returns a hand
+# Should add a Player Constructor that takes two cards and returns a player
+# Should add a Table Constructor that takes a list of players and returns a table
+
 class Round():
     
     def __init__(self):

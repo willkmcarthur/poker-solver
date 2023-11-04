@@ -15,7 +15,6 @@ def flop(deck):
     flop = [deck.draw_card() for i in range(3)]
     return flop
 
-
 def turn(deck):
     turn = [deck.draw_card()]
     return turn
@@ -58,5 +57,3 @@ for p in players:
 
 if not valid_hand(all_cards):
     print("DANGER DANGER")
-    
-    
