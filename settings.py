@@ -7,14 +7,11 @@ Created on Sat Jan 15 17:26:54 2022
 """
 
 hand_order = ['straight-flush', 'quads', 'full-house', 'flush', 'straight', 'trips', 'two-pair', 'one-pair', 'high-card']
-
 suits = ["Diamonds", "Hearts", "Clubs", "Spades"]
-
 ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-
 lowace_ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"]
-
 straight_string = '23456789TJQKA'
+lowace_straight_string = 'A23456789TJQK'
 
 ranges = {
     "UTG" : {
