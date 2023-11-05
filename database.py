@@ -8,6 +8,7 @@ Created on Thu Feb 10 00:02:36 2022
 
 import sqlite3
 
+# Make connection to data.db file
 connection = sqlite3.connect("data.db")
 
 connection.commit()

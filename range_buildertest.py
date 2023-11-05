@@ -9,4 +9,3 @@ for r in ranges:
         for c in s:
             c.show()
         print("----")
-
