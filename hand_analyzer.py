@@ -232,19 +232,29 @@ def winning_hand(hands):
             wh = h[1]
     ties = [h for h in hands if h[0] == hand_order[wi]]
     if len(ties) > 1:
+        print("Tie Breaker between " + str(len(ties)) + " " + str(hand_order[wi]) + " hands.")
         wh = break_tie(ties)
     return hand_order[wi], wh
 
 def break_tie(hands):
     wi = 0
     wh = hands[0]
-    for h,c in hands:
-        for i in range(len(c)):
-            if ranks.index(c[i]) > wi:
-                wi = ranks.index(c[i])
-                wh = c
+    # If the tie is between straights, we need to check for a lowace straight
+    if wh[0] == 'straight':
+            i = 0
+            for hand in hands:
+                if hand[1][0] == 'A' and hand[1][4] == '5':
+                    wi = 4
+                    wh = hand
+                    hands.pop(i)
+                i += 1
+    for hand,card in hands:
+        for i in range(len(card)):
+            if ranks.index(card[i]) > wi:
+                wi = ranks.index(card[i])
+                wh = card
                 break
-            elif ranks.index(c[i]) == wi:
+            elif ranks.index(card[i]) == wi:
                 continue        
     return wh    
 
