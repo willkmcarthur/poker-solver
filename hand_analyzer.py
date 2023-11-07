@@ -112,14 +112,13 @@ def straight(cards):
         return False
     
     # Check for straight with low ace
+    # Lowace straight only exists if the cards are exactly A, 2, 3, 4, 5
     if 'A' in uniques and '2' in uniques and '3' in uniques and '4' in uniques and '5' in uniques and '6' not in uniques:
         straight_cards = sorted(uniques, key=lambda unique: lowace_ranks.index(unique))[:5]
-        for c in range(len(straight_cards)):
-            uniques.remove(straight_cards[c])
         # Return the straight
         return 'straight', straight_cards 
     
-    # Check for straight with high ace
+    # Check for other straights
     else:
         # Order the cards by rank, there may be up to 7 cards
         ordered = sorted(uniques, key=lambda unique: ranks.index(unique))
@@ -139,69 +138,105 @@ def straight(cards):
                 straight_ranks = string_test
                 
         if straight_exists:
+            # Create a list of the cards in the straight
             straight_cards = list()
             for i in range(len(straight_ranks)):
                 straight_cards.append(straight_ranks[i])
-                uniques.remove(straight_cards[i])
+            # Return the straight
             return 'straight', sorted(straight_cards, key=lambda c: ranks.index(c), reverse=True)
-            
         return False
     
 def flush(cards):
-    suits = [c.suit for c in cards]
+    # Find all suits and unique suits
+    suits = [card.suit for card in cards]
     uniques = set(suits)
-    flush = [s for s in uniques if suits.count(s) >= 5]
+    # Find suits with at least 5 cards
+    flush = [suit for suit in uniques if suits.count(suit) >= 5]
+
+    # If there are more than one flush, it's an invalid hand
     if len(flush) > 1:
         raise ValueError("Invalid hand")
+    
+    # If there is a flush, return it with the highest 5 cards sorted by rank
     elif len(flush) == 1:
-        flush_ranks = [c.rank for c in cards if c.suit == flush[0]]
+        # Find the ranks of the cards with the suit of the flush
+        flush_ranks = [card.rank for card in cards if card.suit == flush[0]]
         return 'flush', sorted(flush_ranks, key=lambda fr: ranks.index(fr), reverse = True)[:5]
     else: 
         return False
     
 
 def full_house(cards):
-    values = [c.rank for c in cards]
+    # Find all values and unique values
+    values = [card.rank for card in cards]
     uniques = set(values)
-    trips = [c for c in uniques if values.count(c) == 3]
-    pairs = [c for c in uniques if values.count(c) >= 2 and c not in trips]
+    # Find unique sets of 3 and 2
+    trips = [card for card in uniques if values.count(card) == 3]
+    pairs = [card for card in uniques if values.count(card) >= 2 and card not in trips]
+    
+    # For full house, there must be at least one trip and one pair
     if len(trips) == 0 or len(pairs) == 0:
         return False
+    
+    # If there is more than one trip, we need to find the highest trip
     else:
-        ordered_t = sorted(trips, key=lambda trip: ranks.index(trip), reverse=True)
-        if len(ordered_t) > 1:
-            for o in ordered_t[1:]:
-                ordered_t.remove(o)
-        ordered_p = sorted(pairs, key=lambda pair: ranks.index(pair), reverse=True)
-        full_house_cards = ordered_t + ordered_p
+        ordered_trips = sorted(trips, key=lambda trip: ranks.index(trip), reverse=True)
+        # Remove all trips except the highest
+        if len(ordered_trips) > 1:
+            for o in ordered_trips[1:]:
+                ordered_trips.remove(o)
+        # If there is more than one pair, we need to find the highest pair
+        ordered_pairs = sorted(pairs, key=lambda pair: ranks.index(pair), reverse=True)
+        # Build the full house with the highest trip and sorted pairs
+        full_house_cards = ordered_trips + ordered_pairs
+        # Return the full house by taking the highest trip and first pair in the sorted pairs list
         return 'full-house', full_house_cards[:2]
 
 def quads(cards):
-    values = [c.rank for c in cards]
+    # Find all values and unique values
+    values = [card.rank for card in cards]
     uniques = set(values)
-    quads = [c for c in uniques if values.count(c) == 4]
+    # Check if there are any quads
+    quads = [card for card in uniques if values.count(card) == 4]
+
+    # If there are no quads, it's not a quads hand
     if len(quads) == 0:
         return False
+    # If there are multiple quads, it's an invalid hand
     else:
-        for q in quads:
-            uniques.remove(q)
+        # Remove cards in the quad from the unique values, so we can find the kicker
+        for quad in quads:
+            uniques.remove(quad)
+        # Return the quad and the highest remaining card by including the remaining uniques sorted by highest rank and only taking the first card
         return 'quads', (sorted(quads, key=lambda quad: ranks.index(quad), reverse = True) + sorted(uniques, key=lambda unique: ranks.index(unique), reverse = True))[:2]
     
 def straight_flush(cards):
+    # Check for flush
     if not flush(cards):
         return False
+    
+    # If there is a flush, check for straight
     else:
-        suits = [c.suit for c in cards]
+        # Find the flush suit
+        suits = [card.suit for card in cards]
         uniques = set(suits)
-        fc = [s for s in uniques if suits.count(s) >= 5]
-        values = [c for c in cards if c.suit == fc[0]]
+        flush_suit = [suit for suit in uniques if suits.count(suit) >= 5]
+        # Find the ranks of the cards with the suit of the flush
+        values = [card for card in cards if card.suit == flush_suit[0]]
+
+        # Using the ranks of the flush, check for straight
         if not straight(values):
             return False
+        # If there is a straight, return the straight flush
         else:
+            # The straight function returns a tuple with the type of hand and the cards in the hand
+            # We only need the cards in the hand, so we return the second element of the tuple
             return 'straight-flush', straight(cards)[1]
     
 def determine_hand(cards):
+    # Check for valid hand
     if valid_hand(cards):
+        # Check for hands in order of hand strength
         if straight_flush(cards):
             return straight_flush(cards)
         elif quads(cards):
@@ -220,51 +255,81 @@ def determine_hand(cards):
             return one_pair(cards)
         else:
             return high_card(cards)
+    
+    # If the hand is not valid, raise an exception
     else:
         return "That is an invalid hand"
     
 def winning_hand(hands):
-    wi = hand_order.index(hands[0][0])
-    wh = hands[0][1]
-    for h in hands:
-        if hand_order.index(h[0]) < wi:
-            wi = hand_order.index(h[0])
-            wh = h[1]
-    ties = [h for h in hands if h[0] == hand_order[wi]]
+    # Set an initial winning hand and index in the hand_order dictionary to the first hand
+    # hand_order is sorted from strongest to weakest hand, so the lower the index, the stronger the hand
+    winning_index = hand_order.index(hands[0][0])
+    winning_hand = hands[0][1]
+
+    # Check each hand against the current winning hand
+    for hand in hands:
+        # If the hand is stronger than the current winning hand, it becomes the new winning hand
+        # We check this by seeing if the index of the hand in the hand_order dictionary is lower than the current winning index
+        if hand_order.index(hand[0]) < winning_index:
+            winning_index = hand_order.index(hand[0])
+            winning_hand = hand[1]
+
+    # Check for ties
+    ties = [hand for hand in hands if hand[0] == hand_order[winning_index]]
+    # If there is a tie, break it using kickers and other tie breakers
     if len(ties) > 1:
-        print("Tie Breaker between " + str(len(ties)) + " " + str(hand_order[wi]) + " hands.")
-        wh = break_tie(ties)
-    return hand_order[wi], wh
+        print("Tie Breaker between " + str(len(ties)) + " " + str(hand_order[winning_index]) + " hands.")
+        winning_hand = break_tie(ties)
+    
+    # Return the winning hand and the type of hand
+    return hand_order[winning_index], winning_hand
 
 def break_tie(hands):
-    wi = 0
-    wh = hands[0]
+    # The winning index and winning hand is now scoped to just the hands that are tied
+    # Set the initial winning index and winning hand to the first hand in the list and the first card in the hand
+    # This is because the returns of the hand functions are tuples with a sorted list from highest to lowest rank
+    # In poker, if the highest card in one hand is higher than the highest card in another hand, the first hand wins the tie break
+    winning_index = 0
+    winning_hand = hands[0]
     # If the tie is between straights, we need to check for a lowace straight
-    if wh[0] == 'straight':
+    if winning_hand[0] == 'straight':
             i = 0
             for hand in hands:
+                # Check for exactly A, 2, 3, 4, 5
                 if hand[1][0] == 'A' and hand[1][4] == '5':
-                    wi = 4
-                    wh = hand
+                    # Set the winning index to 4 since 5 is the highest card in the straight
+                    winning_index = 4
+                    # Set the winning hand to the lowace straight
+                    winning_hand = hand
+                    # Remove the lowace straight from the list of hands to check
                     hands.pop(i)
                 i += 1
-    for hand,card in hands:
-        for i in range(len(card)):
-            if ranks.index(card[i]) > wi:
-                wi = ranks.index(card[i])
-                wh = card
+    
+    # Check each hand leftover after the lowace straight check to see if it has a higher card than the current winning hand
+    # Remeber the hands are tuples with the name of the hand and the cards in the hand
+    for hand, cards in hands:
+        # Check each card in the hand to see if it has a higher rank than the current winning hand
+        for i in range(len(cards)):
+            # If the card has a higher rank, it becomes the new winning hand, and we go to the next hand in the tie break
+            if ranks.index(cards[i]) > winning_index:
+                winning_index = ranks.index(cards[i])
+                winning_hand = cards
                 break
-            elif ranks.index(card[i]) == wi:
-                continue        
-    return wh    
+            # If the card matches rank, we go to the next card in the hand
+            elif ranks.index(cards[i]) == winning_index:
+                continue       
+
+    # Return the winning hand 
+    return winning_hand    
 
 def valid_hand(cards):
+    # Check for duplicate cards
     cards_list = []
-    for c in cards:
-        cards_list.append((c.rank, c.suit))
-    c = Counter(cards_list)
-    for x in c:
-        if c.get(x) > 1:
+    for card in cards:
+        cards_list.append((card.rank, card.suit))
+    card = Counter(cards_list)
+    for x in card:
+        if card.get(x) > 1:
             return False
     return True
     
