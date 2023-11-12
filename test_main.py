@@ -12,6 +12,7 @@ from hand_analyzer import determine_hand, winning_hand, valid_hand
 import random
 from poker import Card, Player, Deck
 
+# Manually created tests
 test = [
         # [Card("Clubs","2"), Card("Hearts","2"), Card("Clubs","7"), Card("Clubs","K"), Card("Diamonds","5"), Card("Diamonds","6"), Card("Diamonds","9")],
         # [Card("Diamonds","2"), Card("Spades","2"), Card("Clubs","3"), Card("Diamonds","4"), Card("Diamonds","5"), Card("Clubs","9"), Card("Diamonds","7")],
@@ -32,6 +33,7 @@ test = [
         ]
 deck = Deck()
 
+# Check the manual tests
 compare_tests = []
 for t in test:
     print(determine_hand(t))
@@ -40,23 +42,31 @@ for t in test:
 print('The winning hand is')
 print(winning_hand(compare_tests))
 
-
+# Initialize variables for random tests
 compare_hands = []
+num_tests = 10
 
+# Create and test random hands
 def run_tests(deck):
     i = 0
-    while i < 10:
+    while i < num_tests:
         player = Player()
+        # Create a random hand with 7 cards
         for s in range(7):
             randint = random.randint(0, 51)
             player.add(deck.cards[randint])
+        # Check if the hand is valid
         if valid_hand(player.hand):
+            # If it is, determine the hand and add it to the list of hands to compare
             player.show_hand()
             compare_hands.append(determine_hand(player.hand))
+            # Print the hand and the cards that make it up
             print(determine_hand(player.hand))
             print("----------------------------")
             i+=1
-        
+
+# Run the tests
 run_tests(deck)
+# Print the winning hand
 print('The winning hand is')
 print(winning_hand(compare_hands))
