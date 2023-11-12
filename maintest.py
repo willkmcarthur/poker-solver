@@ -11,7 +11,8 @@ Main Testing file for the poker project
 from hand_analyzer import determine_hand, winning_hand, valid_hand
 from winning_handtest import run_tests
 import random
-from poker import Card, Player, Deck
+from poker import Card, Deck
+from player import Player
 
 # Manually created tests
 test = [

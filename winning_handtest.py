@@ -8,7 +8,8 @@ This file is contains the main function to test a number of random hands against
 
 from hand_analyzer import determine_hand, winning_hand, valid_hand
 import random
-from poker import Card, Player, Deck
+from poker import Card, Deck
+from player import Player
 
 deck = Deck()
 
