@@ -1,3 +1,11 @@
+"""
+Created on Sun Feb 13 14:09:07 2022
+
+@author: willmcarthur
+
+This file is contains the main function to test a number of random hands against each other
+"""
+
 from hand_analyzer import determine_hand, winning_hand, valid_hand
 import random
 from poker import Card, Player, Deck

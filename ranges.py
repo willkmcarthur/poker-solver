@@ -4,6 +4,8 @@
 Created on Thu Dec 30 10:32:00 2021
 
 @author: willmcarthur
+
+This file contains all of the range information for the poker project
 """
 
 import random

@@ -5,7 +5,7 @@ Created on Sat Dec 18 11:02:00 2021
 
 @author: willmcarthur
 
-Main Testing file
+Main Testing file for the poker project
 """
 
 from hand_analyzer import determine_hand, winning_hand, valid_hand

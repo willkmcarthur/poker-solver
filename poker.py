@@ -4,13 +4,12 @@
 Created on Sat Dec 18 10:51:55 2021
 
 @author: willmcarthur
+
+This file contains the classes for the poker project
 """
     
 import random
-# from ranges import build_range, random_hand
-
-suits = ["Diamonds", "Hearts", "Clubs", "Spades"]
-ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+from settings import suits, ranks
 
 class Deck:
     def __init__(self):

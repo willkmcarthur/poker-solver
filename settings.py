@@ -4,6 +4,8 @@
 Created on Sat Jan 15 17:26:54 2022
 
 @author: willmcarthur
+
+This file contains constants for the poker project
 """
 
 hand_order = ['straight-flush', 'quads', 'full-house', 'flush', 'straight', 'trips', 'two-pair', 'one-pair', 'high-card']

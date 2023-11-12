@@ -4,6 +4,8 @@
 Created on Mon Feb 21 09:44:27 2022
 
 @author: willmcarthur
+
+This file is for creating a game loop for the poker game
 """
 
 # Initialize players & position

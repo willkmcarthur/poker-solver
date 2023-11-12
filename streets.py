@@ -4,6 +4,9 @@
 Created on Sun Feb 13 14:09:07 2022
 
 @author: willmcarthur
+
+This file is meant to test the streets of a poke game including the flop, turn, and river
+It might need to be removed entirely or refactored into a different file
 """
 import random
 from poker import Deck, Player, Card
