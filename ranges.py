@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Thu Dec 30 10:32:00 2021
@@ -10,42 +10,11 @@ This file contains all of the range information for the poker project
 
 import random
 from poker import Deck
+from settings import ranks, ranges
 
 deck = Deck()
-ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-ranges = {
-    "UTG" : {
-        "suited" : [("A", "T"), ("K","T"), ("Q", "T"), ("J", "9"), ("T", "9"), ("9","8")],
-        "off-suited" : [("A", "Q")],
-        "pairs" : [("A", "7")]
-        },
-    "UTG2" : {
-        "suited" : [("A", "8"), ("K","9"), ("Q", "9"), ("J", "9"), ("T", "9"), ("9","8")],
-        "off-suited" : [("A", "J")],
-        "pairs" : [("A", "7")]
-        },
-    "LJ" : {
-        "suited" : [("A", "2"), ("K","9"), ("Q", "9"), ("J", "9"), ("T", "8"), ("9","8"), ("8", "7"), ("7", "6")],
-        "off-suited" : [("A", "J"), ("K", "Q")],
-        "pairs" : [("A", "5")]
-        },
-    "HJ" : {
-        "suited" : [("A", "2"), ("K","9"), ("Q", "9"), ("J", "9"), ("T", "8"), ("9","7"), ("8", "7"), ("7", "6"), ("6", "5")],
-        "off-suited" : [("A", "T"), ("K", "J"), ("Q", "J")],
-        "pairs" : [("A", "4")]
-        },
-    "CO" : {
-        "suited" : [("A", "2"), ("K","8"), ("Q", "8"), ("J", "8"), ("T", "8"), ("9","7"), ("8", "6"), ("7", "6"), ("6", "5"), ("5", "4")],
-        "off-suited" : [("A", "T"), ("K", "T"), ("Q", "T"), ("J", "T")],
-        "pairs" : [("A", "2")]
-        },
-    "BTN" : {
-        "suited" : [("A", "2"), ("K","3"), ("Q", "5"), ("J", "6"), ("T", "6"), ("9","6"), ("8", "5"), ("7", "5"), ("6", "4"), ("5", "4"), ("4", "3")],
-        "off-suited" : [("A", "2"), ("K", "9"), ("Q", "9"), ("J", "9"), ("T", "9")],
-        "pairs" : [("A", "2")]
-        }
-    }
 
+# Create a list of all pocket pairs for a given rank
 def pocket_pairs(rank):
     all_rank = [r for r in deck.cards if r.rank == rank]
     pairs = []
@@ -58,6 +27,7 @@ def pocket_pairs(rank):
             j += 1
     return pairs
 
+# Create a list of all pocket pairs for a range between two ranks
 def range_of_pairs(high, low):
     i = ranks.index(low)
     many_pairs = []
@@ -66,6 +36,7 @@ def range_of_pairs(high, low):
         i += 1
     return many_pairs
 
+# Create a list of all off-suited hand variations for two ranks
 def off_suited(high, low):
     all_high = [h for h in deck.cards if h.rank == high]
     all_low = [l for l in deck.cards if l.rank == low]
@@ -76,6 +47,7 @@ def off_suited(high, low):
                 off_suited.append((h, l))
     return off_suited
 
+# Create a list of all off-suited hand possibilities between two ranks
 def range_of_off_suited(high, low):
     i = ranks.index(low)
     j = ranks.index(high)
@@ -85,6 +57,7 @@ def range_of_off_suited(high, low):
         i += 1
     return many_off
 
+# Create a list of all suited hand variations for two ranks
 def suited(high, low):
     all_high = [h for h in deck.cards if h.rank == high]
     all_low = [l for l in deck.cards if l.rank == low]
@@ -96,6 +69,7 @@ def suited(high, low):
                 break
     return suited
 
+# Create a list of all suited hand possibilities between two ranks
 def range_of_suited(high, low):
     i = ranks.index(low)
     j = ranks.index(high)
@@ -105,10 +79,12 @@ def range_of_suited(high, low):
         i += 1
     return many_suited
 
+# Create a list of all hands for a given position
 def build_range(position):
     card_range = []
     hands = []
-    
+    # Using our suited, off-suited, and pairs functions, we can build a range
+    # based on the position of the player
     for r in ranges[position]["suited"]:
         card_range += range_of_suited(r[0], r[1])
     for r in ranges[position]["off-suited"]:
@@ -128,13 +104,15 @@ def build_range(position):
             
     return hands
 
+# Return a random hand from a list of hands
 def random_hand(hands):
     randint = random.randint(0, len(hands)-1)
     return hands[randint]
 
+
 for r in ranges:
     print("----")
-    print(r)
+    print("A random hand in the " + r + " range:")
     for s in random_hand(build_range(r)):
         s.show()
         
