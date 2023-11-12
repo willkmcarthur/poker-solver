@@ -282,6 +282,7 @@ def winning_hand(hands):
         winning_hand = break_tie(ties)
     
     # Return the winning hand and the type of hand
+    print("The winning hand is")
     return hand_order[winning_index], winning_hand
 
 def break_tie(hands):

@@ -5,10 +5,11 @@ Created on Sat Dec 18 11:02:00 2021
 
 @author: willmcarthur
 
-Test Main file
+Main Testing file
 """
 
 from hand_analyzer import determine_hand, winning_hand, valid_hand
+from winning_handtest import run_tests
 import random
 from poker import Card, Player, Deck
 
@@ -42,31 +43,5 @@ for t in test:
 print('The winning hand is')
 print(winning_hand(compare_tests))
 
-# Initialize variables for random tests
-compare_hands = []
-num_tests = 10
-
-# Create and test random hands
-def run_tests(deck):
-    i = 0
-    while i < num_tests:
-        player = Player()
-        # Create a random hand with 7 cards
-        for s in range(7):
-            randint = random.randint(0, 51)
-            player.add(deck.cards[randint])
-        # Check if the hand is valid
-        if valid_hand(player.hand):
-            # If it is, determine the hand and add it to the list of hands to compare
-            player.show_hand()
-            compare_hands.append(determine_hand(player.hand))
-            # Print the hand and the cards that make it up
-            print(determine_hand(player.hand))
-            print("----------------------------")
-            i+=1
-
-# Run the tests
-run_tests(deck)
-# Print the winning hand
-print('The winning hand is')
-print(winning_hand(compare_hands))
+# Run the tests from the winning_handtest.py file and print the results
+print(winning_hand(run_tests(deck)))
