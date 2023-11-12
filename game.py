@@ -4,11 +4,14 @@
 Created on Mon Feb 21 09:44:27 2022
 
 @author: willmcarthur
+
+This file is for creating a game loop for the poker game
 """
 
 # Initialize players & position
 from poker import Player, Deck, Round, Pot
 
+# Game setup
 print("Please enter the number of players: ")
 num_players = int(input())
 print("Now enter the starting stack size: ")
@@ -16,10 +19,12 @@ starting_stack = int(input())
 print("And finally the initial small blind amount, the big blind will be double this amount: ")
 smb = int(input())
 
+# Create players
 players = []
 for i in range(num_players):
     players += [Player(i, starting_stack)]
 
+# Create deck and blind amounts
 deck = Deck()
 btn_pos = 0
 smb = (btn_pos + 1) % num_players

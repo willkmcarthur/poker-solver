@@ -4,6 +4,8 @@
 Created on Thu Feb 10 00:02:36 2022
 
 @author: willmcarthur
+
+This file is for testing the database.py file
 """
 
 import sqlite3

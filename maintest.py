@@ -5,13 +5,16 @@ Created on Sat Dec 18 11:02:00 2021
 
 @author: willmcarthur
 
-Test Main file
+Main Testing file for the poker project
 """
 
 from hand_analyzer import determine_hand, winning_hand, valid_hand
+from winning_handtest import run_tests
 import random
-from poker import Card, Player, Deck
+from poker import Card, Deck
+from player import Player
 
+# Manually created tests
 test = [
         # [Card("Clubs","2"), Card("Hearts","2"), Card("Clubs","7"), Card("Clubs","K"), Card("Diamonds","5"), Card("Diamonds","6"), Card("Diamonds","9")],
         # [Card("Diamonds","2"), Card("Spades","2"), Card("Clubs","3"), Card("Diamonds","4"), Card("Diamonds","5"), Card("Clubs","9"), Card("Diamonds","7")],
@@ -32,6 +35,7 @@ test = [
         ]
 deck = Deck()
 
+# Check the manual tests
 compare_tests = []
 for t in test:
     print(determine_hand(t))
@@ -40,23 +44,5 @@ for t in test:
 print('The winning hand is')
 print(winning_hand(compare_tests))
 
-
-compare_hands = []
-
-def run_tests(deck):
-    i = 0
-    while i < 10:
-        player = Player()
-        for s in range(7):
-            randint = random.randint(0, 51)
-            player.add(deck.cards[randint])
-        if valid_hand(player.hand):
-            player.show_hand()
-            compare_hands.append(determine_hand(player.hand))
-            print(determine_hand(player.hand))
-            print("----------------------------")
-            i+=1
-        
-run_tests(deck)
-print('The winning hand is')
-print(winning_hand(compare_hands))
+# Run the tests from the winning_handtest.py file and print the results
+print(winning_hand(run_tests(deck)))
