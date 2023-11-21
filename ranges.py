@@ -108,11 +108,3 @@ def build_range(position):
 def random_hand(hands):
     randint = random.randint(0, len(hands)-1)
     return hands[randint]
-
-
-for r in ranges:
-    print("----")
-    print("A random hand in the " + r + " range:")
-    for s in random_hand(build_range(r)):
-        s.show()
-        
