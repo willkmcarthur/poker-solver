@@ -307,7 +307,7 @@ def break_tie(hands):
                 i += 1
     
     # Check each hand leftover after the lowace straight check to see if it has a higher card than the current winning hand
-    # Remeber the hands are tuples with the name of the hand and the cards in the hand
+    # Remember the hands are tuples with the name of the hand and the cards in the hand
     for hand, cards in hands:
         # Check each card in the hand to see if it has a higher rank than the current winning hand
         for i in range(len(cards)):
@@ -318,7 +318,9 @@ def break_tie(hands):
                 break
             # If the card matches rank, we go to the next card in the hand
             elif ranks.index(cards[i]) == winning_index:
-                continue       
+                continue
+            else:
+                break       
 
     # Return the winning hand 
     return winning_hand    

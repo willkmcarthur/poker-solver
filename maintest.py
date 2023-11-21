@@ -22,16 +22,17 @@ test = [
         # [Card("Diamonds","2"), Card("Spades","2"), Card("Clubs","5"), Card("Diamonds","5"), Card("Diamonds","7"), Card("Spades","7"), Card("Clubs","A")],
         # [Card("Diamonds","2"), Card("Spades","2"), Card("Clubs","2"), Card("Diamonds","3"), Card("Diamonds","7"), Card("Spades","7"), Card("Clubs","A")],
         # Straight Tests
-        [Card("Diamonds","A"), Card("Spades","3"), Card("Clubs","4"), Card("Diamonds","5"), Card("Diamonds","2"), Card("Spades","6"), Card("Clubs","7")],
-        [Card("Diamonds","K"), Card("Spades","Q"), Card("Clubs","J"), Card("Diamonds","T"), Card("Diamonds","9"), Card("Spades","6"), Card("Clubs","7")],
-        [Card("Diamonds","A"), Card("Spades","3"), Card("Clubs","4"), Card("Diamonds","5"), Card("Diamonds","2"), Card("Spades","8"), Card("Clubs","9")],
-        [Card("Diamonds","A"), Card("Spades","K"), Card("Clubs","Q"), Card("Diamonds","J"), Card("Diamonds","T"), Card("Spades","6"), Card("Clubs","7")],
-        [Card("Diamonds","A"), Card("Spades","2"), Card("Clubs","3"), Card("Diamonds","4"), Card("Diamonds","5"), Card("Spades","6"), Card("Clubs","8")],
-        # [Card("Diamonds","K"), Card("Diamonds","5"), Card("Diamonds","Q"), Card("Spades","K"), Card("Clubs","7"), Card("Diamonds","J"), Card("Diamonds","T")],
-        # [Card("Diamonds","K"), Card("Diamonds","Q"), Card("Diamonds","6"), Card("Spades","J"), Card("Clubs","9"), Card("Diamonds","T"), Card("Diamonds","9")],
-        # [Card("Diamonds","K"), Card("Diamonds","2"), Card("Diamonds","3"), Card("Spades","K"), Card("Clubs","9"), Card("Diamonds","Q"), Card("Diamonds","T")],
-        # [Card("Diamonds","K"), Card("Diamonds","A"), Card("Diamonds","Q"), Card("Spades","K"), Card("Clubs","9"), Card("Diamonds","J"), Card("Diamonds","T")],
-        # [Card("Diamonds","6"), Card("Hearts","6"), Card("Diamonds","A"), Card("Spades","6"), Card("Clubs","T"), Card("Diamonds","5"), Card("Diamonds","Q")],
+        # [Card("Diamonds","A"), Card("Spades","3"), Card("Clubs","4"), Card("Diamonds","5"), Card("Diamonds","2"), Card("Spades","6"), Card("Clubs","7")],
+        # [Card("Diamonds","K"), Card("Spades","Q"), Card("Clubs","J"), Card("Diamonds","T"), Card("Diamonds","9"), Card("Spades","6"), Card("Clubs","7")],
+        # [Card("Diamonds","A"), Card("Spades","3"), Card("Clubs","4"), Card("Diamonds","5"), Card("Diamonds","2"), Card("Spades","8"), Card("Clubs","9")],
+        # [Card("Diamonds","A"), Card("Spades","K"), Card("Clubs","Q"), Card("Diamonds","J"), Card("Diamonds","T"), Card("Spades","6"), Card("Clubs","7")],
+        # [Card("Diamonds","A"), Card("Spades","2"), Card("Clubs","3"), Card("Diamonds","4"), Card("Diamonds","5"), Card("Spades","6"), Card("Clubs","8")],
+        # Two Pair Tests
+        [Card("Diamonds","6"), Card("Hearts","6"), Card("Diamonds","4"), Card("Spades","4"), Card("Clubs","A"), Card("Diamonds","2"), Card("Diamonds","3")],
+        [Card("Spades","A"), Card("Diamonds","A"), Card("Diamonds","9"), Card("Spades","9"), Card("Hearts","4"), Card("Clubs","4"), Card("Diamonds","3")],
+        [Card("Diamonds","J"), Card("Diamonds","2"), Card("Diamonds","3"), Card("Spades","J"), Card("Clubs","9"), Card("Clubs","Q"), Card("Diamonds","9")],
+        [Card("Diamonds","2"), Card("Diamonds","A"), Card("Diamonds","Q"), Card("Spades","2"), Card("Clubs","T"), Card("Clubs","J"), Card("Diamonds","T")],
+        [Card("Diamonds","5"), Card("Hearts","5"), Card("Diamonds","3"), Card("Spades","3"), Card("Clubs","T"), Card("Diamonds","7"), Card("Diamonds","Q")],
         ]
 deck = Deck()
 
